@@ -1,0 +1,30 @@
+version: '2'
+services:
+  hadoop:
+    image: sequenceiq/spark:1.6.0
+    hostname: "sandbox"
+    command: "-d"
+    links:
+      - cassandra
+      - mongo
+    volumes:
+      - ./target/scala-2.10:/target
+    ports:
+      - "8088:8088"
+      - "8042:8042"
+      - "50070:50070"
+      - "50075:50075"
+      - "9000:9000"
+      - "4040:4040"
+  cassandra:
+    image: cassandra:3.3
+    hostname: "sandbox"
+    ports:
+      - "9160:9160"
+      - "9042:9042"
+  mongo:
+    image: mongo:2.6
+    hostname: "sandbox"
+    ports:
+      - "27017:27017"
+      - "28017:28017"
