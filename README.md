@@ -20,7 +20,7 @@ docker-machine and launch docker images:
       docker-machine create -d virtualbox --virtualbox-memory "8000" --virtualbox-cpu-count "4" workshop
       eval "$(docker-machine env workshop)"
       
-      (!) Add sandbox to /etc/hosts with address of `docker-machine ip workshop`. This comes really handy when you navigate 
+      (!) Add "sandbox" to /etc/hosts with address of `docker-machine ip workshop`. This comes really handy when you navigate 
       UI of components through browser or when debugging the code from IDE (e.g. connecting to Cassandra or Mongo containers)  
 
       docker-compose up -d
@@ -54,7 +54,9 @@ Logging in to Docker container
       
 Running Spark shell with fatjar in classpath will allow to execute applications right from spark-shell 
             
-      spark-shell --master yarn-client \
+      spark-shell \
+      --master yarn \
+      --deploy-mode client \
       --executor-cores 1 \
       --num-executors 2 \
       --jars /target/spark-workshop.jar \
@@ -87,11 +89,12 @@ will fail if files are already present in HDFS, so cleanup or filenames change i
 __ParametrizedApplicationExample__ could be submitted like that:
       
       spark-submit --class io.datastrophic.spark.workshop.ParametrizedApplicationExample \
-      --master yarn-cluster \
+      --master yarn \
+      --deploy-mode cluster \
       --num-executors 2 \
       --driver-memory 1g \
       --executor-memory 1g \
-      /spark-workshop.jar \
+      /target/spark-workshop.jar \
       --cassandra-host cassandra \
       --keyspace demo \
       --table event \

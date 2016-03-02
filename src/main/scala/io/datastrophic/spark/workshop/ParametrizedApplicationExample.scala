@@ -1,7 +1,7 @@
 package io.datastrophic.spark.workshop
 
 import com.datastax.spark.connector._
-import io.datastrophic.spark.workshop.domain.CassandraRowWrapper
+import io.datastrophic.spark.workshop.domain.DFCassandraRowWrapper
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -13,11 +13,12 @@ import org.apache.spark.{SparkConf, SparkContext}
   * The application could be submitted like that:
 
    spark-submit --class io.datastrophic.spark.workshop.ParametrizedApplicationExample \
-         --master yarn-cluster \
+         --master yarn \
+         --deploy-mode cluster \
          --num-executors 2 \
          --driver-memory 1g \
          --executor-memory 1g \
-         /spark-workshop.jar \
+         /target/spark-workshop.jar \
          --cassandra-host cassandra
          --keyspace demo
          --table event
@@ -32,7 +33,7 @@ object ParametrizedApplicationExample extends {
       targetDir: String = ""
    )
 
-   implicit def pimpCassandraRow(row: CassandraRow): CassandraRowWrapper = new CassandraRowWrapper(row: CassandraRow)
+   implicit def pimpCassandraRow(row: CassandraRow): DFCassandraRowWrapper = new DFCassandraRowWrapper(row: CassandraRow)
 
    def run(config: Config) {
       val conf = new SparkConf(true).setAppName("Spark Cassandra Demo").set("spark.cassandra.connection.host", config.cassandraHost)
@@ -50,7 +51,6 @@ object ParametrizedApplicationExample extends {
             rdd.map(_.toCampaign).toDF().write.parquet(s"${config.targetDir}/campaign_dump.parquet")
          case _ => println("Table name does not match!")
       }
-
    }
 
    def main(args: Array[String]): Unit = {

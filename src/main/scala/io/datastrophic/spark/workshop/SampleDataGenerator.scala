@@ -13,7 +13,7 @@ object SampleDataGenerator {
          id = UUID.randomUUID(),
          campaignId = id,
          eventType = randomEventType(),
-         value = Random.nextInt(5),
+         value = Random.nextInt(10),
          time = timestamp
       )
 
@@ -22,7 +22,7 @@ object SampleDataGenerator {
          id = id,
          eventType = randomEventType(),
          day = timestamp,
-         value = Random.nextInt(1000)
+         value = Random.nextInt(10000)
       )
 
    val eventTypes = List(

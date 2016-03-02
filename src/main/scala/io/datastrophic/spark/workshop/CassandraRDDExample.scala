@@ -2,7 +2,7 @@ package io.datastrophic.spark.workshop
 
 import com.datastax.spark.connector._
 import io.datastrophic.spark.workshop.domain.{CassandraRowWrapper, CampaignTotals}
-import org.apache.spark.{Logging, SparkConf, SparkContext}
+import org.apache.spark.{SparkConf, SparkContext}
 import org.joda.time.DateTime
 
 object CassandraRDDExample extends App {
