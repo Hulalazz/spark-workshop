@@ -19,9 +19,9 @@ import org.apache.spark.{SparkConf, SparkContext}
          --driver-memory 1g \
          --executor-memory 1g \
          /target/spark-workshop.jar \
-         --cassandra-host cassandra
-         --keyspace demo
-         --table event
+         --cassandra-host cassandra \
+         --keyspace demo \
+         --table event \
          --target-dir /workshop/dumps
   */
 object ParametrizedApplicationExample extends {
